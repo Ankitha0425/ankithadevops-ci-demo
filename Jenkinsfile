@@ -1,33 +1,28 @@
 pipeline {
-    agent any
+    agent {
+        label 'agent1'
+    }
 
     stages {
         stage('Build') {
             steps {
-                echo 'Building the project...'
+                echo 'Build is running on agent1'
+                sh 'echo Running on: $(hostname)'
+                sh 'java -version'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing the project...'
+                echo 'Testing on agent1'
+                sh 'echo Test successful'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying the project...'
+                echo 'Deployment stage completed'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build completed successfully!'
-        }
-
-        failure {
-            echo 'Build failed!'
         }
     }
 }
